@@ -1,12 +1,15 @@
 // Obtenemos la info de la API
 const getData = async () => {
-  fetch("http://localhost:3000/api/total")
-    .then((response) => {
-      return response.json();
-    })
-    .then((json) => {
-      console.log(json);
-    });
+  try {
+    const response = await fetch(`http://localhost:3000/api/total`);
+    const { data } = await response.json();
+    if (data) {
+      return data;
+    }
+  } catch (error) {
+    localStorage.clear();
+    console.error(`Error: ${error}`);
+  }
 };
 // crea la tabla a partir de getData
 const createTable = async () => {
