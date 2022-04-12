@@ -1,50 +1,41 @@
-// Crear un evento que al hacer click en "Mostrar Grafico", nos rescate la informacion de la API
-$("#btn-show").submit(async (event) => {
-  event.preventDefault();
-  const submt = getData();
-  toggleHide("btn-hide");
-  //   console.log("click en fommulario");
-});
-
-// Obtenemos la info de la API
+//Chart js
 const getData = async () => {
-  fetch("http://localhost:3000/api/total")
-    .then((response) => {
-      return response.json();
-    })
-    .then((json) => {
-      console.log(json);
-    });
+  try {
+    const response = await fetch(`http://localhost:3000/api/total`);
+    const { data } = await response.json();
+    if (data) {
+      return data;
+    }
+  } catch (error) {
+    localStorage.clear();
+    console.error(`Error: ${error}`);
+  }
 };
 
-//Chart js
-const ctx = document.getElementById("myChart");
-const grafica = (data) => {
-  filtro = data.filter((elements) => elements.deaths > 10000);
+const graficoBarras = async () => {
+  const ctx = document.getElementById("myChart");
+  const data = await getData();
+  const filtro = data.filter((element) => element.deaths > 100000);
+  const paises = filtro.map((elemento) => elemento.location);
+  const casos = filtro.map((elemento) => elemento.confirmed);
+  const muertos = filtro.map((elemento) => elemento.deaths);
   const myChart = new Chart(ctx, {
     type: "bar",
     data: {
-      labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+      labels: paises,
       datasets: [
         {
-          label: "# of Votes",
-          data: [12, 19, 3, 5, 2, 3],
-          backgroundColor: [
-            "rgba(255, 99, 132, 0.2)",
-            "rgba(54, 162, 235, 0.2)",
-            "rgba(255, 206, 86, 0.2)",
-            "rgba(75, 192, 192, 0.2)",
-            "rgba(153, 102, 255, 0.2)",
-            "rgba(255, 159, 64, 0.2)",
-          ],
-          borderColor: [
-            "rgba(255, 99, 132, 1)",
-            "rgba(54, 162, 235, 1)",
-            "rgba(255, 206, 86, 1)",
-            "rgba(75, 192, 192, 1)",
-            "rgba(153, 102, 255, 1)",
-            "rgba(255, 159, 64, 1)",
-          ],
+          label: "Confirmados",
+          data: casos,
+          backgroundColor: ["rgba(255, 99, 132, 0.2)"],
+          borderColor: ["rgba(255, 99, 132, 1)"],
+          borderWidth: 1,
+        },
+        {
+          label: "muertos",
+          data: muertos,
+          backgroundColor: ["rgba(75, 192, 192, 0.2)"],
+          borderColor: ["rgb(75, 192, 192)"],
           borderWidth: 1,
         },
       ],
@@ -55,6 +46,44 @@ const grafica = (data) => {
           beginAtZero: true,
         },
       },
+      plugins: {
+        title: {
+          display: true,
+          text: "Situacion mundial - COVID19",
+          font: {
+            size: 36,
+          },
+        },
+        subtitle: {
+          display: true,
+          text: "Paises con mas de 100,000 muertes",
+          font: {
+            size: 24,
+          },
+        },
+      },
     },
   });
 };
+graficoBarras();
+// Obtenemos la info de la API
+
+// crea la tabla a partir de getData
+const createTable = async () => {
+  const table = document.getElementById("covidTable");
+  const data = await getData();
+  data.forEach((country) => {
+    let row = document.createElement("tr");
+    row.innerHTML = `<th scope="row">${
+      country.location
+    }</th><td>${country.confirmed.toLocaleString()}</td><td>${country.deaths.toLocaleString()}</td><td>${
+      country.recovered
+    }</td><td>${
+      country.active
+    }</td><td><button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#countryModal" data-bs-country="${
+      country.location
+    }">Ver detalles</button></td>`;
+    table.appendChild(row);
+  });
+};
+createTable();

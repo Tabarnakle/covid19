@@ -12,6 +12,7 @@
     />
     <title>Document</title>
   </head>
+
   <body>
     <!-- navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -64,13 +65,23 @@
     <!-- Grafico -->
     <section class="container">
       <div class="row" id="chart-wrapper">
-        <canvas id="myChart" width="400" height="400"></canvas>
+        <canvas id="myChart" width="100%" height="50vw"></canvas>
       </div>
     </section>
 
     <!-- Tabla -->
     <section class="container">
-      <div class="row" id="table-wrapper"></div>
+      <div class="row" id="table-wrapper">
+        <table id="covidTable" class="table">
+          <tr>
+            <th>Pais</th>
+            <th>Confirmados</th>
+            <th>Muertos</th>
+            <th>Recuperados</th>
+            <th>Activos</th>
+          </tr>
+        </table>
+      </div>
     </section>
 
     <!-- Modal detalles por pais -->
