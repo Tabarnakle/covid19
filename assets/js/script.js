@@ -109,7 +109,7 @@ const getDataCountry = async (country) => {
 $("#countryModal").on("show.bs.modal", (event) => {
   const button = event.relatedTarget;
   const country = button.getAttribute("data-country");
-
+  const countryModal = document.getElementById("countryModal");
   const countryData = async () => {
     const modalTitle = countryModal.querySelector(".modal-title");
     const modalBody = countryModal.querySelector(".modal-body");
