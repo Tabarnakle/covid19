@@ -85,5 +85,6 @@ const createTable = async () => {
     }">Ver detalles</button></td>`;
     table.appendChild(row);
   });
+  table.classList.remove("d-none");
 };
 createTable();
