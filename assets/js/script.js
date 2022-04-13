@@ -72,6 +72,7 @@ graficoBarras();
 // crea la tabla a partir de getData
 const createTable = async () => {
   const table = document.getElementById("covidTable");
+  table.innerHTML = "";
   const data = await paginacion(paginaActual);
   data.forEach((country) => {
     let row = document.createElement("tr");
