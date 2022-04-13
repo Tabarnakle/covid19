@@ -1,3 +1,4 @@
+let paginaActual = 1;
 //Chart js
 const getData = async () => {
   try {
@@ -71,21 +72,24 @@ graficoBarras();
 // crea la tabla a partir de getData
 const createTable = async () => {
   const table = document.getElementById("covidTable");
-  const data = await getData();
-  data.forEach((country) => {
-    let row = document.createElement("tr");
-    row.innerHTML = `<th scope="row">${
-      country.location
-    }</th><td>${country.confirmed.toLocaleString()}</td><td>${country.deaths.toLocaleString()}</td><td>${
-      country.recovered
-    }</td><td>${
-      country.active
-    }</td><td><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#countryModal" data-country="${
-      country.location
-    }">Ver detalles</button></td>`;
-    table.appendChild(row);
-  });
-  table.classList.remove("d-none");
+  table.innerHTML = "";
+  const data = await paginacion(paginaActual);
+  if (data) {
+    data.forEach((country) => {
+      let row = document.createElement("tr");
+      row.innerHTML = `<th scope="row">${
+        country.location
+      }</th><td>${country.confirmed.toLocaleString()}</td><td>${country.deaths.toLocaleString()}</td><td>${
+        country.recovered
+      }</td><td>${
+        country.active
+      }</td><td><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#countryModal" data-country="${
+        country.location
+      }">Ver detalles</button></td>`;
+      table.appendChild(row);
+    });
+    table.classList.remove("d-none");
+  }
 };
 createTable();
 
@@ -123,4 +127,30 @@ $("#countryModal").on("show.bs.modal", (event) => {
     </ul>`;
   };
   countryData();
+});
+
+async function paginacion(pagina) {
+  const dataPaginacion = await getData();
+  let dataPaginaActual;
+  if (pagina === 1) {
+    dataPaginaActual = dataPaginacion.slice(pagina - 1, pagina * 10);
+  } else {
+    dataPaginaActual = dataPaginacion.slice((pagina - 1) * 10, pagina * 10);
+  }
+  return dataPaginaActual;
+}
+
+$("#prevPage").on("click", (e) => {
+  e.preventDefault();
+  if (paginaActual > 1) {
+    paginaActual--;
+    createTable();
+    $("#contadorPagina").text(paginaActual);
+  }
+});
+$("#nextPage").on("click", (e) => {
+  e.preventDefault();
+  paginaActual++;
+  createTable();
+  $("#contadorPagina").text(paginaActual);
 });
