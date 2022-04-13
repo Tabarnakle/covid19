@@ -1,3 +1,11 @@
+$("#js-login").submit((event) => {
+  event.preventDefault();
+  const email = document.getElementById("correoElectronico").value;
+  const password = document.getElementById("contrasena").value;
+  console.log(email);
+  console.log(password);
+})
+
 let paginaActual = 1;
 //Chart js
 const getData = async () => {
