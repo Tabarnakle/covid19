@@ -74,20 +74,22 @@ const createTable = async () => {
   const table = document.getElementById("covidTable");
   table.innerHTML = "";
   const data = await paginacion(paginaActual);
-  data.forEach((country) => {
-    let row = document.createElement("tr");
-    row.innerHTML = `<th scope="row">${
-      country.location
-    }</th><td>${country.confirmed.toLocaleString()}</td><td>${country.deaths.toLocaleString()}</td><td>${
-      country.recovered
-    }</td><td>${
-      country.active
-    }</td><td><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#countryModal" data-country="${
-      country.location
-    }">Ver detalles</button></td>`;
-    table.appendChild(row);
-  });
-  table.classList.remove("d-none");
+  if (data) {
+    data.forEach((country) => {
+      let row = document.createElement("tr");
+      row.innerHTML = `<th scope="row">${
+        country.location
+      }</th><td>${country.confirmed.toLocaleString()}</td><td>${country.deaths.toLocaleString()}</td><td>${
+        country.recovered
+      }</td><td>${
+        country.active
+      }</td><td><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#countryModal" data-country="${
+        country.location
+      }">Ver detalles</button></td>`;
+      table.appendChild(row);
+    });
+    table.classList.remove("d-none");
+  }
 };
 createTable();
 
@@ -143,10 +145,12 @@ $("#prevPage").on("click", (e) => {
   if (paginaActual > 1) {
     paginaActual--;
     createTable();
+    $("#contadorPagina").text(paginaActual);
   }
 });
 $("#nextPage").on("click", (e) => {
   e.preventDefault();
   paginaActual++;
   createTable();
+  $("#contadorPagina").text(paginaActual);
 });
