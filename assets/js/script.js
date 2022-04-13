@@ -124,3 +124,15 @@ $("#countryModal").on("show.bs.modal", (event) => {
   };
   countryData();
 });
+
+let paginaActual = 1;
+const paginacion = async (pagina) => {
+  const dataPaginacion = await getData();
+  let dataPaginaActual;
+  if (pagina === 1) {
+    dataPaginaActual = dataPaginacion.slice(pagina - 1, pagina * 10);
+  } else {
+    dataPaginaActual = dataPaginacion.slice((pagina - 1) * 10, pagina * 10);
+  }
+  return dataPaginaActual;
+};
