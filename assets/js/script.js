@@ -137,3 +137,16 @@ async function paginacion(pagina) {
   }
   return dataPaginaActual;
 }
+
+$("#prevPage").on("click", (e) => {
+  e.preventDefault();
+  if (paginaActual > 1) {
+    paginaActual--;
+    createTable();
+  }
+});
+$("#nextPage").on("click", (e) => {
+  e.preventDefault();
+  paginaActual++;
+  createTable();
+});
