@@ -1,3 +1,4 @@
+let paginaActual = 1;
 //Chart js
 const getData = async () => {
   try {
@@ -71,7 +72,7 @@ graficoBarras();
 // crea la tabla a partir de getData
 const createTable = async () => {
   const table = document.getElementById("covidTable");
-  const data = await getData();
+  const data = await paginacion(paginaActual);
   data.forEach((country) => {
     let row = document.createElement("tr");
     row.innerHTML = `<th scope="row">${
@@ -125,8 +126,7 @@ $("#countryModal").on("show.bs.modal", (event) => {
   countryData();
 });
 
-let paginaActual = 1;
-const paginacion = async (pagina) => {
+async function paginacion(pagina) {
   const dataPaginacion = await getData();
   let dataPaginaActual;
   if (pagina === 1) {
@@ -135,4 +135,4 @@ const paginacion = async (pagina) => {
     dataPaginaActual = dataPaginacion.slice((pagina - 1) * 10, pagina * 10);
   }
   return dataPaginaActual;
-};
+}
