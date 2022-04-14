@@ -1,4 +1,42 @@
+// Le agrega funcionalidad a boton Enviar en inicio de sesión
+$("#js-login").submit(async (event) => {
+  const email = document.getElementById("correoElectronico").value;
+  const password = document.getElementById("contrasena").value;
+  const JWT = await postData(email, password);
+  toggle();
+  console.log(JWT);
+});
+
 let paginaActual = 1;
+
+// Obtener token
+const postData = async (email, password) => {
+  try {
+    const response = await fetch("http://localhost:3000/api/login", {
+      method: "POST",
+      body: JSON.stringify({ email: email, password, password }),
+    });
+    const { token } = await response.json();
+    // guarda el token en localStorage
+    localStorage.setItem("jwt-token", token);
+    return token;
+  } catch (error) {
+    localStorage.clear();
+    console.error(`Error: ${error}`);
+  }
+};
+
+/*document.getElementById("logout").addEventListener("click", () => {
+  localStorage.clear();
+  location.reload();
+});*/
+// Oculta el formulario inicial, y muestra el feed
+const toggle = () => {
+  $(`#navbarNavDropdown ul li:nth-child(2)`).toggle();
+  $(`#chart-wrapper`).toggle();
+  $(`#table-wrapper`).toggle();
+};
+
 //Chart js
 const getData = async () => {
   try {
@@ -140,6 +178,16 @@ async function paginacion(pagina) {
   return dataPaginaActual;
 }
 
+function paginasTotales() {
+  return getData().then((data) => Math.ceil(data.length / 10));
+}
+
+$(document).ready(() => {
+  paginasTotales().then((res) => {
+    $("#paginasTotales").text(res);
+  });
+});
+
 $("#prevPage").on("click", (e) => {
   e.preventDefault();
   if (paginaActual > 1) {
@@ -155,8 +203,28 @@ $("#nextPage").on("click", (e) => {
   $("#contadorPagina").text(paginaActual);
 });
 
-// Crear botón logout que elimine el JWT almacenado y volver a la aplicación al estado inicial.
-document.getElementById("logout").addEventListener("click", () => {
-  localStorage.clear();
-  location.reload();
-});
+const getDataEndpoint = async (endpoint) => {
+  try {
+    const jwt = localStorage.getItem("jwt-token");
+    const response = await fetch(`http://localhost:3000/api/${endpoint}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+      },
+    });
+    const { data } = await response.json();
+    if (data) {
+      return data;
+    }
+  } catch (error) {
+    localStorage.clear();
+    console.error(`Error: ${error}`);
+  }
+};
+
+(() => {
+  const token = localStorage.getItem("jwt-token");
+  if (token) {
+    toggle();
+  }
+})();
