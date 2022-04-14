@@ -4,7 +4,6 @@ $("#js-login").submit(async (event) => {
   const password = document.getElementById("contrasena").value;
   const JWT = await postData(email, password);
   toggle();
-  console.log(JWT);
 });
 
 let paginaActual = 1;
