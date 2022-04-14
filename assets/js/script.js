@@ -26,12 +26,6 @@ const postData = async (email, password) => {
   }
 };
 
-// Oculta el gráfico y la tabla
-const toggleGAndTable = (graficoBarras, createTable) => {
-  $(`#${graficoBarras}`).toggle();
-  $(`#${createTable}`).toggle();
-}
-
 //Chart js
 const getData = async () => {
   try {
