@@ -174,6 +174,16 @@ async function paginacion(pagina) {
   return dataPaginaActual;
 }
 
+function paginasTotales() {
+  return getData().then((data) => Math.ceil(data.length / 10));
+}
+
+$(document).ready(() => {
+  paginasTotales().then((res) => {
+    $("#paginasTotales").text(res);
+  });
+});
+
 $("#prevPage").on("click", (e) => {
   e.preventDefault();
   if (paginaActual > 1) {
