@@ -140,6 +140,12 @@ async function paginacion(pagina) {
   return dataPaginaActual;
 }
 
+async function paginasTotales() {
+  await getData().then((data) => {
+    return Math.ceil(data.length / 10);
+  });
+}
+
 $("#prevPage").on("click", (e) => {
   e.preventDefault();
   if (paginaActual > 1) {
