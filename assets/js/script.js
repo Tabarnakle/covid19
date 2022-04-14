@@ -1,12 +1,37 @@
-$("#js-login").submit((event) => {
+// Le agrega funcionalidad a boton Enviar en inicio de sesión
+$("#js-login").submit(async (event) => {
   event.preventDefault();
   const email = document.getElementById("correoElectronico").value;
   const password = document.getElementById("contrasena").value;
-  console.log(email);
-  console.log(password);
-})
+  const JWT = await postData(email, password);
+  console.log(JWT);
+});
 
 let paginaActual = 1;
+
+// Obtener token
+const postData = async (email, password) => {
+  try {
+    const response = await fetch("http://localhost:3000/api/login", {
+      method: "POST",
+      body: JSON.stringify({ email: email, password, password }),
+    });
+    const { token } = await response.json();
+    // guarda el token en localStorage
+    localStorage.setItem("jwt-token", token);
+    return token;
+  } catch (error) {
+    localStorage.clear();
+    console.error(`Error: ${error}`);
+  }
+};
+
+// Oculta el gráfico y la tabla
+const toggleGAndTable = (graficoBarras, createTable) => {
+  $(`#${graficoBarras}`).toggle();
+  $(`#${createTable}`).toggle();
+}
+
 //Chart js
 const getData = async () => {
   try {
