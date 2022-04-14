@@ -1,10 +1,12 @@
 // Le agrega funcionalidad a boton Enviar en inicio de sesión
 $("#js-login").submit(async (event) => {
+  event.preventDefault();
   const email = document.getElementById("correoElectronico").value;
   const password = document.getElementById("contrasena").value;
   const JWT = await postData(email, password);
   toggle();
   console.log(JWT);
+  window.location.reload();
 });
 
 let paginaActual = 1;
@@ -222,5 +224,5 @@ const getDataEndpoint = async (endpoint) => {
   const token = localStorage.getItem("jwt-token");
   if (token) {
     toggle();
-  };
+  }
 })();
