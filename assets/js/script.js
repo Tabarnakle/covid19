@@ -1,4 +1,38 @@
+// Le agrega funcionalidad a boton Enviar en inicio de sesión
+$("#js-login").submit(async (event) => {
+  const email = document.getElementById("correoElectronico").value;
+  const password = document.getElementById("contrasena").value;
+  const JWT = await postData(email, password);
+  toggle();
+  console.log(JWT);
+});
+
 let paginaActual = 1;
+
+// Obtener token
+const postData = async (email, password) => {
+  try {
+    const response = await fetch("http://localhost:3000/api/login", {
+      method: "POST",
+      body: JSON.stringify({ email: email, password, password }),
+    });
+    const { token } = await response.json();
+    // guarda el token en localStorage
+    localStorage.setItem("jwt-token", token);
+    return token;
+  } catch (error) {
+    localStorage.clear();
+    console.error(`Error: ${error}`);
+  }
+};
+
+// Oculta el formulario inicial, y muestra el feed
+const toggle = () => {
+  $(`#navbarNavDropdown ul li:nth-child(2)`).toggle();
+  $(`#chart-wrapper`).toggle();
+  $(`#table-wrapper`).toggle();
+};
+
 //Chart js
 const getData = async () => {
   try {
@@ -164,3 +198,11 @@ $("#nextPage").on("click", (e) => {
   createTable();
   $("#contadorPagina").text(paginaActual);
 });
+
+
+(() => {
+  const token = localStorage.getItem("jwt-token");
+  if (token) {
+    toggle();
+  };
+})();
