@@ -140,11 +140,15 @@ async function paginacion(pagina) {
   return dataPaginaActual;
 }
 
-async function paginasTotales() {
-  await getData().then((data) => {
-    return Math.ceil(data.length / 10);
-  });
+function paginasTotales() {
+  return getData().then((data) => Math.ceil(data.length / 10));
 }
+
+$(document).ready(() => {
+  paginasTotales().then((res) => {
+    $("#paginasTotales").text(res);
+  });
+});
 
 $("#prevPage").on("click", (e) => {
   e.preventDefault();
