@@ -5,7 +5,6 @@ $("#js-login").submit(async (event) => {
   const password = document.getElementById("contrasena").value;
   const JWT = await postData(email, password);
   toggle();
-  console.log(JWT);
   window.location.reload();
 });
 
@@ -28,11 +27,18 @@ const postData = async (email, password) => {
   }
 };
 
+document.getElementById("logout").addEventListener("click", () => {
+  localStorage.clear();
+  location.reload();
+});
+
 // Oculta el formulario inicial, y muestra el feed
 const toggle = () => {
   $(`#navbarNavDropdown ul li:nth-child(2)`).toggle();
   $(`#chart-wrapper`).toggle();
   $(`#table-wrapper`).toggle();
+  document.getElementById(`situacion-chile`).classList.remove("d-none");
+  document.getElementById(`logout`).classList.remove("d-none");
 };
 
 //Chart js

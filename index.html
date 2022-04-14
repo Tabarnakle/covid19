@@ -14,19 +14,25 @@
 
 <body>
   <!-- navbar -->
-  <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="#">Covid-19</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
       aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
-      <ul class="navbar-nav">
+      <ul class="navbar-nav ml-auto">
         <li class="nav-item active">
           <a class="nav-link" href="#">Inicio <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
           <a class="nav-link" data-toggle="modal" data-target="#inicioSesion" href="#">Iniciar sesion</a>
+        </li>
+        <li class="nav-item d-none" id="situacion-chile">
+          <a class="nav-link"  href="#">Situacion Chile</a>
+        </li>
+        <li class="nav-item d-none" id="logout">
+          <a class="nav-link"  href="#">Cerrar sesión</a>
         </li>
       </ul>
     </div>
