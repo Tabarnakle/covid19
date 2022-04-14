@@ -199,6 +199,24 @@ $("#nextPage").on("click", (e) => {
   $("#contadorPagina").text(paginaActual);
 });
 
+const getDataEndpoint = async (endpoint) => {
+  try {
+    const jwt = localStorage.getItem("jwt-token");
+    const response = await fetch(`http://localhost:3000/api/${endpoint}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+      },
+    });
+    const { data } = await response.json();
+    if (data) {
+      return data;
+    }
+  } catch (error) {
+    localStorage.clear();
+    console.error(`Error: ${error}`);
+  }
+};
 
 (() => {
   const token = localStorage.getItem("jwt-token");
