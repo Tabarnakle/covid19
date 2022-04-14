@@ -1,9 +1,11 @@
 // Le agrega funcionalidad a boton Enviar en inicio de sesión
 $("#js-login").submit(async (event) => {
+  event.preventDefault();
   const email = document.getElementById("correoElectronico").value;
   const password = document.getElementById("contrasena").value;
   const JWT = await postData(email, password);
   toggle();
+  window.location.reload();
 });
 
 let paginaActual = 1;
@@ -25,10 +27,11 @@ const postData = async (email, password) => {
   }
 };
 
-/*document.getElementById("logout").addEventListener("click", () => {
+document.getElementById("logout").addEventListener("click", () => {
   localStorage.clear();
   location.reload();
-});*/
+});
+
 // Oculta el formulario inicial, y muestra el feed
 const toggle = () => {
   $(`#navbarNavDropdown ul li:nth-child(2)`).toggle();
