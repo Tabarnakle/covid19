@@ -45,40 +45,18 @@
         <h4 class="m-0"><span id="contadorPagina">1</span>/<span id="paginasTotales"></span></h4 class="m-0">
         <button type="button" class="btn btn-outline-primary mx-5" id="nextPage">Pagina Siguiente</button>
       </div>
-    </section>
-    <!-- Tabla -->
-    <section class="container">
-      <div class="row" id="table-wrapper">
-        <div class="row container justify-content-center p-3">
-          <button
-            type="button"
-            class="btn btn-outline-primary mx-5"
-            id="prevPage"
-          >
-            Pagina Anterior
-          </button>
-          <span id="contadorPagina">1</span>
-          <button
-            type="button"
-            class="btn btn-outline-primary mx-5"
-            id="nextPage"
-          >
-            Pagina Siguiente
-          </button>
-        </div>
-        <table id="covidTable" class="table d-none">
-          <tr>
-            <th>Pais</th>
-            <th>Confirmados</th>
-            <th>Muertos</th>
-            <th>Recuperados</th>
-            <th>Activos</th>
-            <th></th>
-          </tr>
-        </table>
-      </div>
+      <table id="covidTable" class="table d-none">
+        <tr>
+          <th>Pais</th>
+          <th>Confirmados</th>
+          <th>Muertos</th>
+          <th>Recuperados</th>
+          <th>Activos</th>
+          <th></th>
+        </tr>
+      </table>
     </div>
-  </div>
+  </section>
 
   <!-- Modal detalles por pais -->
   <div class="modal fade" id="countryModal" tabindex="-1" aria-labelledby="countryModalLabel" aria-hidden="true">
