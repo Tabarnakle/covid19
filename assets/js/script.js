@@ -154,3 +154,9 @@ $("#nextPage").on("click", (e) => {
   createTable();
   $("#contadorPagina").text(paginaActual);
 });
+
+// Crear botón logout que elimine el JWT almacenado y volver a la aplicación al estado inicial.
+document.getElementById("logout").addEventListener("click", () => {
+  localStorage.clear();
+  location.reload();
+});
