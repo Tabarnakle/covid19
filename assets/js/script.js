@@ -232,3 +232,64 @@ const getDataEndpoint = async (endpoint) => {
     toggle();
   }
 })();
+
+// Agregar función a botón Situación Chile
+$("#myChartL").hide();
+$("#situacion-chile").click(() => {
+  $("#myChartL").show();
+});
+
+const graficoLinea = async () => {
+  const ctx = document.getElementById("myChartL");
+  const data = await getData();
+  const filtro = data.filter((element) => element.deaths > 100000);
+  const paises = filtro.map((elemento) => elemento.location);
+  const casos = filtro.map((elemento) => elemento.confirmed);
+  const muertos = filtro.map((elemento) => elemento.deaths);
+  const myChartL = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: paises,
+      datasets: [
+        {
+          label: "Confirmados",
+          data: casos,
+          backgroundColor: ["rgba(255, 99, 132, 0.2)"],
+          borderColor: ["rgba(255, 99, 132, 1)"],
+          borderWidth: 1,
+        },
+        {
+          label: "muertos",
+          data: muertos,
+          backgroundColor: ["rgba(75, 192, 192, 0.2)"],
+          borderColor: ["rgb(75, 192, 192)"],
+          borderWidth: 1,
+        },
+      ],
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+        },
+      },
+      plugins: {
+        title: {
+          display: true,
+          text: "Situacion mundial - COVID19",
+          font: {
+            size: 36,
+          },
+        },
+        subtitle: {
+          display: true,
+          text: "Paises con mas de 100,000 muertes",
+          font: {
+            size: 24,
+          },
+        },
+      },
+    },
+  });
+};
+graficoLinea();
