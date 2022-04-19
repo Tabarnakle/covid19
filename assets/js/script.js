@@ -233,23 +233,20 @@ const getDataEndpoint = async (endpoint) => {
   }
 })();
 
-// Agregar función a botón Situación Chile
-$("#myChartL").hide();
-$("#situacion-chile").click(() => {
-  $("#myChartL").show();
-});
 
+// GRAFICO DE LINEAS SITUACION CHILE
 const graficoLinea = async () => {
   const ctx = document.getElementById("myChartL");
   const data = await getData();
   const filtro = data.filter((element) => element.deaths > 100000);
-  const paises = filtro.map((elemento) => elemento.location);
+  const chile = filtro.map((elemento) => elemento.Chile);
   const casos = filtro.map((elemento) => elemento.confirmed);
   const muertos = filtro.map((elemento) => elemento.deaths);
+  const recuperados = filtro.map((elemento) => elemento.recovered);
   const myChartL = new Chart(ctx, {
-    type: "bar",
+    type: "line",
     data: {
-      labels: paises,
+      labels: chile,
       datasets: [
         {
           label: "Confirmados",
@@ -265,6 +262,13 @@ const graficoLinea = async () => {
           borderColor: ["rgb(75, 192, 192)"],
           borderWidth: 1,
         },
+        {
+          label: "recuperados",
+          data: recuperados,
+          backgroundColor: ["rgba(75, 192, 192, 0.2)"],
+          borderColor: ["rgb(75, 192, 192)"],
+          borderWidth: 1,
+        },
       ],
     },
     options: {
@@ -276,16 +280,9 @@ const graficoLinea = async () => {
       plugins: {
         title: {
           display: true,
-          text: "Situacion mundial - COVID19",
+          text: "Situacion Chile",
           font: {
             size: 36,
-          },
-        },
-        subtitle: {
-          display: true,
-          text: "Paises con mas de 100,000 muertes",
-          font: {
-            size: 24,
           },
         },
       },
