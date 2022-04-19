@@ -234,11 +234,15 @@ async function getDataEndpoint(endpoint) {
 
 // crea el grafico de lineas
 async function dataGraficoChile() {
-  const confirmados = await getDataEndpoint("confirmed");
-  const muertos = await getDataEndpoint("deaths");
-  const recuperados = await getDataEndpoint("recovered");
-  const etiquetas = confirmados.map((obj) => obj.date);
-  console.log(etiquetas);
+  const confirmados = await getDataEndpoint("confirmed")
+    .then((array) => array.map((element) => element.total))
+  const muertos = await getDataEndpoint("deaths")
+    .then((array) => array.map((element) => element.total))
+  const recuperados = await getDataEndpoint("recovered")
+    .then((array) => array.map((element) => element.total))
+  const etiquetas = await getDataEndpoint("recovered")
+  .then((array) => array.map((element) => element.date))
+
   const ctx = document.getElementById("myChartL")
   const myChart = new Chart(ctx, {
     type: "line",
@@ -270,6 +274,7 @@ async function dataGraficoChile() {
     },
   });
 }
+dataGraficoChile();
 
 // chequea que haya un token en localStorage
 (() => {
