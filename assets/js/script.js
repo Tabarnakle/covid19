@@ -208,7 +208,7 @@ $("#nextPage").on("click", (e) => {
   $("#contadorPagina").text(paginaActual);
 });
 
-const getDataEndpoint = async (endpoint) => {
+async function getDataEndpoint(endpoint) {
   try {
     const jwt = localStorage.getItem("jwt-token");
     const response = await fetch(`http://localhost:3000/api/${endpoint}`, {
