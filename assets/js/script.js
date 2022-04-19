@@ -39,6 +39,7 @@ const toggle = () => {
   $(`#table-wrapper`).toggle();
   document.getElementById(`situacion-chile`).classList.remove("d-none");
   document.getElementById(`logout`).classList.remove("d-none");
+  document.getElementById(`myChartL`).classList.remove("d-none");
 };
 
 //Chart js
