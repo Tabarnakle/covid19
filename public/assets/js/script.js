@@ -27,12 +27,13 @@ const postData = async (email, password) => {
   }
 };
 
+// Elimina token de localStorage para cerrar sesion
 document.getElementById("logout").addEventListener("click", () => {
   localStorage.clear();
   location.reload();
 });
 
-// Oculta el formulario inicial, y muestra el feed
+// Oculta 
 const toggle = () => {
   $(`#navbarNavDropdown ul li:nth-child(2)`).toggle();
   $(`#chart-wrapper`).toggle();
@@ -42,7 +43,7 @@ const toggle = () => {
   document.getElementById(`myChartL`).classList.remove("d-none");
 };
 
-//Chart js
+// Consulta API de todos los paises
 const getData = async () => {
   try {
     const response = await fetch(`http://localhost:3000/api/total`);
@@ -56,6 +57,7 @@ const getData = async () => {
   }
 };
 
+// Grafico mundial
 const graficoBarras = async () => {
   const ctx = document.getElementById("myChart");
   const data = await getData();
@@ -110,7 +112,7 @@ const graficoBarras = async () => {
   });
 };
 graficoBarras();
-// Obtenemos la info de la API
+
 
 // crea la tabla a partir de getData
 const createTable = async () => {
@@ -172,6 +174,7 @@ $("#countryModal").on("show.bs.modal", (event) => {
   countryData();
 });
 
+// Divide la info de getData en arrays de largo 10
 async function paginacion(pagina) {
   const dataPaginacion = await getData();
   let dataPaginaActual;
@@ -183,6 +186,7 @@ async function paginacion(pagina) {
   return dataPaginaActual;
 }
 
+// obtiene el numero de paginas totales para paginas de largo 10
 function paginasTotales() {
   return getData().then((data) => Math.ceil(data.length / 10));
 }
@@ -208,6 +212,7 @@ $("#nextPage").on("click", (e) => {
   $("#contadorPagina").text(paginaActual);
 });
 
+// usa el token para consumir distintos endpoints de la API
 async function getDataEndpoint(endpoint) {
   try {
     const jwt = localStorage.getItem("jwt-token");
@@ -227,6 +232,7 @@ async function getDataEndpoint(endpoint) {
   }
 }
 
+// crea el grafico de lineas
 async function dataGraficoChile() {
   const confirmados = await getDataEndpoint("confirmed");
   const muertos = await getDataEndpoint("deaths");
@@ -264,6 +270,8 @@ async function dataGraficoChile() {
     },
   });
 }
+
+// chequea que haya un token en localStorage
 (() => {
   const token = localStorage.getItem("jwt-token");
   if (token) {
