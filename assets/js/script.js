@@ -225,8 +225,45 @@ async function getDataEndpoint(endpoint) {
     localStorage.clear();
     console.error(`Error: ${error}`);
   }
-};
+}
 
+async function dataGraficoChile() {
+  const confirmados = await getDataEndpoint("confirmed");
+  const muertos = await getDataEndpoint("deaths");
+  const recuperados = await getDataEndpoint("recovered");
+  const etiquetas = confirmados.map((obj) => obj.date);
+  console.log(etiquetas);
+  const ctx = document.getElementById("myChartL")
+  const myChart = new Chart(ctx, {
+    type: "line",
+    data: {
+      labels: etiquetas,
+      datasets: [
+        {
+          label: "Confirmados",
+          data: confirmados,
+          backgroundColor: ["rgba(255, 99, 132, 0.2)"],
+          borderColor: ["rgba(255, 99, 132, 1)"],
+          borderWidth: 1,
+        },
+        {
+          label: "Muertos",
+          data: muertos,
+          backgroundColor: ["rgba(255, 99, 132, 0.2)"],
+          borderColor: ["rgba(255, 99, 132, 1)"],
+          borderWidth: 1,
+        },
+        {
+          label: "Recuperados",
+          data: recuperados,
+          backgroundColor: ["rgba(255, 99, 132, 0.2)"],
+          borderColor: ["rgba(255, 99, 132, 1)"],
+          borderWidth: 1,
+        },
+      ],
+    },
+  });
+}
 (() => {
   const token = localStorage.getItem("jwt-token");
   if (token) {
