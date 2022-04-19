@@ -252,25 +252,42 @@ async function dataGraficoChile() {
         {
           label: "Confirmados",
           data: confirmados,
-          backgroundColor: ["rgba(255, 99, 132, 0.2)"],
-          borderColor: ["rgba(255, 99, 132, 1)"],
-          borderWidth: 1,
+          backgroundColor: ["rgba(255, 255, 0, 0.3)"],
         },
         {
           label: "Muertos",
           data: muertos,
-          backgroundColor: ["rgba(255, 99, 132, 0.2)"],
-          borderColor: ["rgba(255, 99, 132, 1)"],
-          borderWidth: 1,
+          backgroundColor: ["rgba(255, 0, 0, 0.3)"],
         },
         {
           label: "Recuperados",
           data: recuperados,
-          backgroundColor: ["rgba(255, 99, 132, 0.2)"],
-          borderColor: ["rgba(255, 99, 132, 1)"],
-          borderWidth: 1,
+          backgroundColor: ["rgba(0, 0, 255, 0.3)"],
         },
       ],
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+        },
+      },
+      plugins: {
+        title: {
+          display: true,
+          text: "Situacion Chile - COVID19",
+          font: {
+            size: 36,
+          },
+        },
+        subtitle: {
+          display: true,
+          text: "Evolucion de casos",
+          font: {
+            size: 24,
+          },
+        },
+      },
     },
   });
 }
