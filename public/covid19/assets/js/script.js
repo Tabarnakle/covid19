@@ -299,6 +299,7 @@ async function dataGraficoChile() {
   });
 }
 dataGraficoChile()
+
 //agrega toggleChart a boton situacion chile
 document
   .getElementById("situacion-chile")
