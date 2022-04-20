@@ -4,7 +4,7 @@ $("#js-login").submit(async (event) => {
   const email = document.getElementById("correoElectronico").value;
   const password = document.getElementById("contrasena").value;
   const JWT = await postData(email, password);
-  toggle();
+  toggleNav();
   window.location.reload();
 });
 
@@ -33,13 +33,17 @@ document.getElementById("logout").addEventListener("click", () => {
   location.reload();
 });
 
-// Oculta 
-const toggle = () => {
+// cambia botones de navbar
+const toggleNav = () => {
   $(`#navbarNavDropdown ul li:nth-child(2)`).toggle();
-  $(`#chart-wrapper`).toggle();
-  $(`#table-wrapper`).toggle();
   document.getElementById(`situacion-chile`).classList.remove("d-none");
   document.getElementById(`logout`).classList.remove("d-none");
+};
+
+//cambia graficos al seleccionar situacion chile
+const toggleChart = () => {
+  $(`#chart-wrapper`).toggle();
+  $(`#table-wrapper`).toggle();
   document.getElementById(`myChartL`).classList.remove("d-none");
 };
 
@@ -112,7 +116,6 @@ const graficoBarras = async () => {
   });
 };
 graficoBarras();
-
 
 // crea la tabla a partir de getData
 const createTable = async () => {
@@ -234,16 +237,20 @@ async function getDataEndpoint(endpoint) {
 
 // crea el grafico de lineas
 async function dataGraficoChile() {
-  const confirmados = await getDataEndpoint("confirmed")
-    .then((array) => array.map((element) => element.total))
-  const muertos = await getDataEndpoint("deaths")
-    .then((array) => array.map((element) => element.total))
-  const recuperados = await getDataEndpoint("recovered")
-    .then((array) => array.map((element) => element.total))
-  const etiquetas = await getDataEndpoint("recovered")
-  .then((array) => array.map((element) => element.date))
+  const confirmados = await getDataEndpoint("confirmed").then((array) =>
+    array.map((element) => element.total)
+  );
+  const muertos = await getDataEndpoint("deaths").then((array) =>
+    array.map((element) => element.total)
+  );
+  const recuperados = await getDataEndpoint("recovered").then((array) =>
+    array.map((element) => element.total)
+  );
+  const etiquetas = await getDataEndpoint("recovered").then((array) =>
+    array.map((element) => element.date)
+  );
 
-  const ctx = document.getElementById("myChartL")
+  const ctx = document.getElementById("myChartL");
   const myChart = new Chart(ctx, {
     type: "line",
     data: {
@@ -291,12 +298,17 @@ async function dataGraficoChile() {
     },
   });
 }
-dataGraficoChile();
-
+//agrega toggleChart a boton situacion chile
+document
+  .getElementById("situacion-chile")
+  .addEventListener("click", function () {
+    dataGraficoChile();
+    toggleChart();
+  });
 // chequea que haya un token en localStorage
 (() => {
   const token = localStorage.getItem("jwt-token");
   if (token) {
-    toggle();
+    toggleNav();
   }
 })();
