@@ -35,16 +35,16 @@ document.getElementById("logout").addEventListener("click", () => {
 
 // cambia botones de navbar
 const toggleNav = () => {
-  $(`#navbarNavDropdown ul li:nth-child(2)`).toggle();
-  document.getElementById(`situacion-chile`).classList.remove("d-none");
-  document.getElementById(`logout`).classList.remove("d-none");
+  $('#login').toggle()
+  $('#situacion-chile').toggle()
+  $('#logout').toggle()
 };
 
 //cambia graficos al seleccionar situacion chile
 const toggleChart = () => {
   $(`#chart-wrapper`).toggle();
   $(`#table-wrapper`).toggle();
-  document.getElementById(`myChartL`).classList.remove("d-none");
+  $('#myChartL').toggle()
 };
 
 // Consulta API de todos los paises
@@ -298,12 +298,23 @@ async function dataGraficoChile() {
     },
   });
 }
+dataGraficoChile()
+
 //agrega toggleChart a boton situacion chile
 document
   .getElementById("situacion-chile")
   .addEventListener("click", function () {
-    dataGraficoChile();
-    toggleChart();
+    if($("#chart-wrapper").is(":visible")){
+      toggleChart()
+    }
+  });
+
+  document
+  .getElementById("home")
+  .addEventListener("click", function () {
+    if($("#myChartL").is(":visible")){
+      toggleChart()
+    }
   });
 // chequea que haya un token en localStorage
 (() => {

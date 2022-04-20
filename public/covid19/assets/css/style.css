@@ -1,3 +1,15 @@
 html {
   scroll-behavior: smooth;
 }
+
+#situacion-chile {
+  display: none;
+}
+
+#logout {
+  display: none;
+}
+
+#myChartL {
+  display: none;
+}
