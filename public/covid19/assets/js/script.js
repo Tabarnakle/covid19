@@ -312,6 +312,7 @@ document
 document.getElementById("home").addEventListener("click", function () {
   if ($("#myChartL").is(":visible")) {
     toggleChart();
+    hideCargando();
   }
 });
 // chequea que haya un token en localStorage
