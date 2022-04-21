@@ -21,13 +21,13 @@ html {
   border-top: 8px solid #9c41f2;
   border-radius: 100%;
   margin: auto;
-  margin-top: 12rem;
-  visibility: hidden;
+  display: none;
   animation: spin 1s infinite linear;
 }
 
 #cargando.display {
-  visibility: visible;
+  display: block;
+  margin-top: 12rem;
 }
 @keyframes spin {
   from {
