@@ -249,9 +249,6 @@ async function dataGraficoChile() {
   const etiquetas = await getDataEndpoint("recovered").then((array) =>
     array.map((element) => element.date)
   );
-
-  hideCargando();
-
   const ctx = document.getElementById("myChartL");
   const myChart = new Chart(ctx, {
     type: "line",
@@ -300,7 +297,7 @@ async function dataGraficoChile() {
     },
   });
 }
-dataGraficoChile();
+dataGraficoChile().then(() => $("#cargando").remove());
 
 //agrega toggleChart a boton situacion chile
 document
@@ -328,9 +325,6 @@ document.getElementById("home").addEventListener("click", function () {
 const cargando = document.getElementById("cargando");
 function displayCargando() {
   cargando.classList.add("display");
-  setTimeout(() => {
-    loader.classList.remove("display");
-  }, 5000);
 }
 
 function hideCargando() {
