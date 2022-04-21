@@ -35,16 +35,16 @@ document.getElementById("logout").addEventListener("click", () => {
 
 // cambia botones de navbar
 const toggleNav = () => {
-  $('#login').toggle()
-  $('#situacion-chile').toggle()
-  $('#logout').toggle()
+  $("#login").toggle();
+  $("#situacion-chile").toggle();
+  $("#logout").toggle();
 };
 
 //cambia graficos al seleccionar situacion chile
 const toggleChart = () => {
   $(`#chart-wrapper`).toggle();
   $(`#table-wrapper`).toggle();
-  $('#myChartL').toggle()
+  $("#myChartL").toggle();
 };
 
 // Consulta API de todos los paises
@@ -250,6 +250,8 @@ async function dataGraficoChile() {
     array.map((element) => element.date)
   );
 
+  hideCargando();
+
   const ctx = document.getElementById("myChartL");
   const myChart = new Chart(ctx, {
     type: "line",
@@ -298,24 +300,23 @@ async function dataGraficoChile() {
     },
   });
 }
-dataGraficoChile()
+dataGraficoChile();
 
 //agrega toggleChart a boton situacion chile
 document
   .getElementById("situacion-chile")
   .addEventListener("click", function () {
-    if($("#chart-wrapper").is(":visible")){
-      toggleChart()
+    if ($("#chart-wrapper").is(":visible")) {
+      toggleChart();
+      displayCargando();
     }
   });
 
-  document
-  .getElementById("home")
-  .addEventListener("click", function () {
-    if($("#myChartL").is(":visible")){
-      toggleChart()
-    }
-  });
+document.getElementById("home").addEventListener("click", function () {
+  if ($("#myChartL").is(":visible")) {
+    toggleChart();
+  }
+});
 // chequea que haya un token en localStorage
 (() => {
   const token = localStorage.getItem("jwt-token");
@@ -323,3 +324,15 @@ document
     toggleNav();
   }
 })();
+
+const cargando = document.getElementById("cargando");
+function displayCargando() {
+  cargando.classList.add("display");
+  setTimeout(() => {
+    loader.classList.remove("display");
+  }, 5000);
+}
+
+function hideCargando() {
+  cargando.classList.remove("display");
+}
